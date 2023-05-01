@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono
 import java.time.Month
 
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/users")
 class UserController(@Autowired val service: UserService) {
     @GetMapping("all")
     fun getAllUser(): Flux<User> {

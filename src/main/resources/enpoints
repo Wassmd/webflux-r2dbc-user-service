@@ -1,0 +1,11 @@
+All
+----
+ curl http://localhost:8081/api/users/all
+
+ Get User By Id
+ --------------
+ curl http://localhost:8081/api/users/1
+
+ Create User
+ -----------
+ curl -X POST -H "Content-Type: application/json" -d '{"name":"Cookie","balance": 5000}' http://localhost:8081/api/users
