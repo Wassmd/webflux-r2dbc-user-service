@@ -3,6 +3,7 @@ package com.paxier.userservice.controller
 import com.paxier.userservice.entity.User
 import com.paxier.userservice.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.query.Param
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -20,7 +22,8 @@ import java.time.Month
 @RequestMapping("api/users")
 class UserController(@Autowired val service: UserService) {
     @GetMapping("all")
-    fun getAllUser(): Flux<User> {
+    fun getAllUser(@RequestParam name: String): Flux<User> {
+        println(name)
         return service.getAll()
     }
 
@@ -48,5 +51,16 @@ class UserController(@Autowired val service: UserService) {
         return service.deleteUser(id)
             .map { ResponseEntity.ok(it) }
             .defaultIfEmpty(ResponseEntity.notFound().build())
+    }
+
+    @GetMapping("error")
+    fun error(): Mono<User> {
+        return Mono.error(RuntimeException("Error occurred"))
+    }
+
+    @GetMapping("sleep")
+    fun sleep(): Mono<String> {
+        return Mono.just("Hello World")
+            .delayElement(java.time.Duration.ofSeconds(10))
     }
 }
