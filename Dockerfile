@@ -4,6 +4,6 @@ MAINTAINER paxier.com
 
 COPY  build/libs/user-service.jar user-service.jar
 
-EXPOSE 8081
+EXPOSE 8083
 
 ENTRYPOINT ["java", "-jar", "/user-service.jar"]
